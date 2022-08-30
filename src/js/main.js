@@ -5,8 +5,6 @@ import { refs } from './refs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-// import throttle from 'lodash.throttle';
-
 
 const newsApiService = new NewsApiService();
 const loadMoreBtn = new LoadMoreBtn({
@@ -50,14 +48,16 @@ function fetchArticles() {
 
     if (articles.length === 0) {
       Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
+        'Sorry, there are no images matching your search query. Please try again.'
       );
       loadMoreBtn.hide();
+      refs.endCollectionText.classList.remove('is-hidden');
     }
 
     if (articles.length > 0) {
       Notify.success(`Hooray! We found ${articles.length} images.`);
       lightbox.refresh();
+      refs.endCollectionText.classList.add('is-hidden');
     }
   });
 }
