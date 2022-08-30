@@ -70,3 +70,9 @@ function appendHitsMarkup(articles) {
 function clearArticlesContainer() {
   refs.gallery.innerHTML = '';
 }
+
+
+
+
+
+
