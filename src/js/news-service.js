@@ -1,4 +1,5 @@
 // import axios from 'axios';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const API_KEY = '?key=11240134-58b8f655e9e0f8ae8b6e8e7de&q=';
 const BASE_URL = 'https://pixabay.com/api/';
@@ -19,6 +20,11 @@ export default class NewsApiService {
       .then(data => {
         this.incrementPage();
 
+        // if (data.hits <= 0) {
+        //   Notify.failure(
+        //     'Sorry, there are no images matching your search query. Please try again.'
+        //   );
+        // }
         return data.hits;
       });
   }
