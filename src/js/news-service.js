@@ -1,5 +1,4 @@
 // import axios from 'axios';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const API_KEY = '?key=11240134-58b8f655e9e0f8ae8b6e8e7de&q=';
 const BASE_URL = 'https://pixabay.com/api/';
@@ -12,16 +11,21 @@ export default class NewsApiService {
     this.page = 1;
   }
 
-  fetchArticles() {
-    return fetch(
+  async fetchArticles() {
+    const response = await fetch(
       `${BASE_URL}${API_KEY}${this.searchQuery}${BASE_OPTIONS}${this.page}`
-    )
-      .then(r => r.json())
-      .then(data => {
-        this.incrementPage();
-
-        return data.hits;
-      });
+    );
+    return await response.json().then(data => {
+      try {
+        if (data.ok) {
+          return data.json();
+        }
+      } catch (error) {
+        throw new Error(data.statusText);
+      }
+      this.incrementPage();
+      return data.hits;
+    });
   }
 
   incrementPage() {
@@ -40,11 +44,3 @@ export default class NewsApiService {
     this.searchQuery = newQuery;
   }
 }
-
-// export default async function fetchImages(value, page) {
-// const url = 'https://pixabay.com/api/';
-// const key = '11240134-58b8f655e9e0f8ae8b6e8e7de';
-// const filter = `?key=${key}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`;
-
-//   return await axios.get(`${url}${filter}`).then(response => response.data);
-// }

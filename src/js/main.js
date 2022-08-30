@@ -41,25 +41,30 @@ function onSearch(e) {
 
 function fetchArticles() {
   loadMoreBtn.disable();
-  newsApiService.fetchArticles().then(articles => {
-    console.log(articles);
-    appendHitsMarkup(articles);
-    loadMoreBtn.enable();
+  newsApiService
+    .fetchArticles()
+    .then(articles => {
+      appendHitsMarkup(articles);
+      loadMoreBtn.enable();
 
-    if (articles.length === 0) {
-      Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-      loadMoreBtn.hide();
-      refs.endCollectionText.classList.remove('is-hidden');
-    }
+      if (articles.length === 0) {
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+        loadMoreBtn.hide();
+        refs.endCollectionText.classList.remove('is-hidden');
+      }
 
-    if (articles.length > 0) {
-      Notify.success(`Hooray! We found ${articles.length} images.`);
-      lightbox.refresh();
-      refs.endCollectionText.classList.add('is-hidden');
-    }
-  });
+      if (articles.length > 0) {
+        Notify.success(`Hooray! We found ${articles.length} images.`);
+        lightbox.refresh();
+        refs.endCollectionText.classList.add('is-hidden');
+      }
+    })
+    .catch(error => {
+      Notify.failure('Oops...');
+      return error;
+    });
 }
 
 function appendHitsMarkup(articles) {
@@ -76,3 +81,30 @@ function clearArticlesContainer() {
 
 
 
+// function fetchArticles() {
+//   loadMoreBtn.disable();
+//   newsApiService
+//     .fetchArticles()
+//     .then(articles => {
+//       appendHitsMarkup(articles);
+//       loadMoreBtn.enable();
+
+//       if (articles.length === 0) {
+//         Notify.failure(
+//           'Sorry, there are no images matching your search query. Please try again.'
+//         );
+//         loadMoreBtn.hide();
+//         refs.endCollectionText.classList.remove('is-hidden');
+//       }
+
+//       if (articles.length > 0) {
+//         Notify.success(`Hooray! We found ${articles.length} images.`);
+//         lightbox.refresh();
+//         refs.endCollectionText.classList.add('is-hidden');
+//       }
+//     })
+//     .catch(error => {
+//       Notify.failure('Oops...');
+//       return error;
+//     });
+// }
