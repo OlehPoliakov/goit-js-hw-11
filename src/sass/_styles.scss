@@ -66,6 +66,9 @@ p {
 // Search form
 
 .search-form {
+  position: fixed;
+  top: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,6 +78,8 @@ p {
   background: #34a6e8;
   background: linear-gradient(to right, #34a6e8, #dce834);
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.5);
+  opacity: 0.75;
+  z-index: 1;
 
   &__input {
     width: 180px;
@@ -130,6 +135,7 @@ p {
 // Gallery
 
 .gallery {
+  margin-top: 70px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -227,25 +233,3 @@ p {
     display: none;
   }
 }
-
-//go-to-top 
-
-
-#myBtn {
-  display: none;
-  position: fixed;
-  bottom: 30px;
-  right: 5px;
-  z-index: 99;
-  font-size: 26px;
-  border: none;
-  outline: none;
-  background: #fff;
-  cursor: pointer;
-  border-radius: 50%;
-
-  &:hover {
-    opacity: 0.5;
-  }
-}
-
