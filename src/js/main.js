@@ -4,7 +4,8 @@ import LoadMoreBtn from './load-more-btn';
 import { refs } from './refs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+import 'simplelightbox/dist/simple-lightbox.min.css'
+
 
 const newsApiService = new NewsApiService();
 const loadMoreBtn = new LoadMoreBtn({
@@ -21,6 +22,8 @@ let lightbox = new SimpleLightbox('.photo-card a', {
   captionDelay: 250,
 });
 
+
+
 function onSearch(e) {
   e.preventDefault();
 
@@ -32,16 +35,15 @@ function onSearch(e) {
     );
     return;
   }
-
   loadMoreBtn.show();
   newsApiService.resetPage();
   clearArticlesContainer();
   fetchArticles();
+  
 }
 
 async function fetchArticles() {
   loadMoreBtn.disable();
-
   try {
     await newsApiService.fetchArticles().then(articles => {
       appendHitsMarkup(articles);
