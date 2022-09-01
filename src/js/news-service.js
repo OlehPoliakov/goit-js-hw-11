@@ -10,21 +10,22 @@ export default class NewsApiService {
     this.searchQuery = '';
     this.page = 1;
   }
-
+  // 
   async fetchArticles() {
-    const response = await fetch(
-      `${BASE_URL}${API_KEY}${this.searchQuery}${BASE_OPTIONS}${this.page}`
-    );
+    const URL = `${BASE_URL}${API_KEY}${this.searchQuery}${BASE_OPTIONS}${this.page}`;
+    
+    const response = await fetch(URL);
+
     return await response.json().then(data => {
       try {
         if (data.ok) {
           return data.json();
         }
+        this.incrementPage();
+        return data.hits;
       } catch (error) {
         throw new Error(data.statusText);
       }
-      this.incrementPage();
-      return data.hits;
     });
   }
 

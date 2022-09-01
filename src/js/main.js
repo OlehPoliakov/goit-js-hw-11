@@ -39,11 +39,11 @@ function onSearch(e) {
   fetchArticles();
 }
 
-function fetchArticles() {
+async function fetchArticles() {
   loadMoreBtn.disable();
-  newsApiService
-    .fetchArticles()
-    .then(articles => {
+
+  try {
+    await newsApiService.fetchArticles().then(articles => {
       appendHitsMarkup(articles);
       loadMoreBtn.enable();
 
@@ -60,11 +60,11 @@ function fetchArticles() {
         lightbox.refresh();
         refs.endCollectionText.classList.add('is-hidden');
       }
-    })
-    .catch(error => {
-      Notify.failure('Oops...');
-      return error;
     });
+  } catch (error) {
+    Notify.failure('Oops...');
+    return error;
+  }
 }
 
 function appendHitsMarkup(articles) {
@@ -75,36 +75,3 @@ function appendHitsMarkup(articles) {
 function clearArticlesContainer() {
   refs.gallery.innerHTML = '';
 }
-
-
-
-
-
-
-// function fetchArticles() {
-//   loadMoreBtn.disable();
-//   newsApiService
-//     .fetchArticles()
-//     .then(articles => {
-//       appendHitsMarkup(articles);
-//       loadMoreBtn.enable();
-
-//       if (articles.length === 0) {
-//         Notify.failure(
-//           'Sorry, there are no images matching your search query. Please try again.'
-//         );
-//         loadMoreBtn.hide();
-//         refs.endCollectionText.classList.remove('is-hidden');
-//       }
-
-//       if (articles.length > 0) {
-//         Notify.success(`Hooray! We found ${articles.length} images.`);
-//         lightbox.refresh();
-//         refs.endCollectionText.classList.add('is-hidden');
-//       }
-//     })
-//     .catch(error => {
-//       Notify.failure('Oops...');
-//       return error;
-//     });
-// }
